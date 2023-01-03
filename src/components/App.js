@@ -1,27 +1,19 @@
 import React from "react";
-import { MovieContext } from "./MovieContext";
+import "../styles/App.css";
+import MovieProvider from "./MovieContext";
+import Movie from "./Movie";
+import MoviesList from "./MoviesList";
 
-class Movie extends React.Component {
-  static contextType = MovieContext;
-
-  render() {
-    const { movies, selectedMovieId } = this.context;
-    const movie = movies.find((movie) => movie.id === selectedMovieId);
-
-    return (
-      <div id="movie-banner">
-        {movie ? (
-          <>
-            <h2>{movie.title}</h2>
-            <h2>{movie.year}</h2>
-            <h2>{movie.director}</h2>
-          </>
-        ) : (
-          <h1>Invalid Id</h1>
-        )}
+const App = () => {
+  return (
+    <MovieProvider>
+      <div id="main">
+        <h1>Movie List</h1>
+        <MoviesList />
+        <Movie />
       </div>
-    );
-  }
-}
+    </MovieProvider>
+  );
+};
 
-export default Movie;
+export default App;
