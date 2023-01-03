@@ -1,25 +1,27 @@
-import React, {useState}from "react";
-import "../styles/App.css";
-import Movie from "./Movie";
-import MoviesList from "./MoviesList";
+import React from "react";
+import { MovieContext } from "./MovieContext";
 
-const App = () => {
+class Movie extends React.Component {
+  static contextType = MovieContext;
 
-  const [val, setVal] = useState([])
-  function call(val){
-    setVal(val)
+  render() {
+    const { movies, selectedMovieId } = this.context;
+    const movie = movies.find((movie) => movie.id === selectedMovieId);
+
+    return (
+      <div id="movie-banner">
+        {movie ? (
+          <>
+            <h2>{movie.title}</h2>
+            <h2>{movie.year}</h2>
+            <h2>{movie.director}</h2>
+          </>
+        ) : (
+          <h1>Invalid Id</h1>
+        )}
+      </div>
+    );
   }
-  // console.log(val.length===0)
-  
-  return (
-    <div id="main">
-      <h1>Movie List</h1>
-      <MoviesList function={call}/>
-      {
-        val.length===0 ? <div id="movies-banner">Invalid Id</div>: <Movie Movie_director={val.director} Movie_year={val.year}  Movie_title={val.title}/>
-      }
-    </div>
-  );
-};
+}
 
-export default App;
+export default Movie;
